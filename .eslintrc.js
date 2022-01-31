@@ -3,6 +3,7 @@ module.exports = {
     es6: true,
     node: true,
     jest: true,
+    browser: true,
   },
   extends: 'eslint:recommended',
   parser: '@typescript-eslint/parser',
@@ -15,7 +16,7 @@ module.exports = {
     indent: ['error', 2],
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
-    'no-console': 'warn',
+    'no-console': 'off',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',
