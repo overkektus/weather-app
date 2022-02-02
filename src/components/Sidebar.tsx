@@ -1,59 +1,112 @@
 import React from 'react';
 import { HomeIcon, ChartBarIcon, MapIcon, CalendarIcon, CogIcon } from '@heroicons/react/outline';
+import { Divider, Menu } from 'antd';
+import styled from 'styled-components'
+import * as colors from '../assets/styled-components/colors';
+import WeatherCard from './WeatherCard';
+import logo from '../assets/img/logo.png';
 
-const links = [
+const menuItems = [
   {
     title: 'Dashboard',
-    href: '#',
     icon: <HomeIcon/>
   },
   {
     title: 'Statistics',
-    href: '#',
     icon: <ChartBarIcon/>
   },
   {
     title: 'Map',
-    href: '#',
     icon: <MapIcon/>
   },
   {
     title: 'Calendar',
-    href: '#',
     icon: <CalendarIcon/>
   },
   {
     title: 'Setting',
-    href: '#',
     icon: <CogIcon/>
   }
 ];
 
-export declare interface SidebarItemProps {
-  href: string;
-  // icon: ;
-  title: string;
-}
-
-const SidebarItem = ({ href, icon, title }: SidebarItemProps) => (
-  <a href={href} className='flex items-center space-x-2 py-2 px-4'>
-    <div className='w-8 h-8'>
-      {icon}
-    </div>
-    <span>{title}</span>
-  </a>
-)
-
-
-const Sidebar = () => {
+const Sidebar: React.FC = () => {
   return (
-    <div className="bg-blue-800 text-blue-100 w-64 space-y-6">
-      logo
-      <nav>
-        {links.map(link => <SidebarItem key={link.title} href={link.href} icon={link.icon} title={link.title} />)}
-      </nav>
-    </div>
+    <SideBar>
+      <LogoWrapper>
+        <Logo src={logo}/>
+        <AppName>
+          meteorolog
+        </AppName>
+      </LogoWrapper>
+      <StyledDivider />
+      <StyledMenu>
+        {menuItems.map(item =>
+          <StyledMenuItem key={item.title}>
+            <Icon>{item.icon}</Icon>
+            <p>{item.title}</p>
+          </StyledMenuItem>  
+        )}
+      </StyledMenu>
+      <WeatherCard />
+    </SideBar>
   );
 };
+
+const Logo = styled.img`
+  width: 2.5rem;
+`;
+
+const AppName = styled.h1`
+  color: ${colors.lightWhite};
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.2rem;
+`;
+
+const LogoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1rem 1.5rem;
+`;
+
+const SideBar = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: ${colors.pramary};
+  min-height: 100vh;
+`
+
+const StyledDivider = styled(Divider)`
+  border-top: 1px solid ${colors.second}
+  margin: 0;
+`
+
+const StyledMenu = styled(Menu)`
+  background-color: ${colors.pramary};
+  border: none;
+`
+
+const StyledMenuItem = styled(Menu.Item)`
+  background-color: ${colors.pramary};
+  border-left: 2px solid transparent;
+  color: ${colors.lightWhite};
+  &:hover {
+    color: white !important;
+    border-left: 2px solid white;
+  }
+
+  > span {
+    display: flex;
+    align-items: center;
+  }
+`
+
+const Icon = styled.div`
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+`
 
 export default Sidebar;
