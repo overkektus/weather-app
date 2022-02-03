@@ -1,11 +1,17 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { weatherAPI } from '../services/WeatherService';
+import { googleGecodeAPI } from '../services/GoogleGecodeService';
 
-const rootReducer = combineReducers({ })
+const rootReducer = combineReducers({
+  [weatherAPI.reducerPath]: weatherAPI.reducer,
+  [googleGecodeAPI.reducerPath]: googleGecodeAPI.reducer
+})
 
 export const setupStore = () => {
   return configureStore({
-    reducer: rootReducer
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(weatherAPI.middleware, googleGecodeAPI.middleware)
   });
 }
 

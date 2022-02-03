@@ -1,18 +1,30 @@
+import { Button, Tooltip } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
+import { XIcon } from '@heroicons/react/solid';
 
 import * as colors from '../assets/styled-components/colors';
 
 interface FavoriteCitiesItemProps {
+  placeId: string;
   cityName: string;
   time: string;
   imgSrc?: string;
+  onDeleteClick: Function;
 }
 
-const FavoriteCitiesItem: React.FC<FavoriteCitiesItemProps> = ({ cityName, time, imgSrc = 'https://traveller-eu.ru/sites/default/files/ukrashenie-doma-niderlandy-gorod-amsterdam-vecherom-doma-kanala-fary-nochnaya-peyzazh-shelkovoy-tkan-800x533.jpg' }) => {
+const FavoriteCitiesItem: React.FC<FavoriteCitiesItemProps> = ({ onDeleteClick, placeId, cityName, time, imgSrc = 'https://traveller-eu.ru/sites/default/files/ukrashenie-doma-niderlandy-gorod-amsterdam-vecherom-doma-kanala-fary-nochnaya-peyzazh-shelkovoy-tkan-800x533.jpg' }) => {
+
+  const handleDeleteClick = () => {
+    onDeleteClick(placeId);
+  }
+
   return (
     <Wrapper>
       <Card backgroundImage={imgSrc}>
+        <Tooltip title="Remove from favorite">
+          <DeleteButton onClick={handleDeleteClick} type="primary" danger shape="circle" icon={<StyledXIcon />} />
+        </Tooltip>
         <Info>
           <CurrentTime>{time}</CurrentTime>
         </Info>
@@ -24,13 +36,31 @@ const FavoriteCitiesItem: React.FC<FavoriteCitiesItemProps> = ({ cityName, time,
 
 export default FavoriteCitiesItem;
 
+const DeleteButton = styled(Button)`
+  width: 1rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StyledXIcon = styled(XIcon)`
+  width: 1.5rem;
+`;
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: fit-content;
   height: fit-content;
+  padding-top: 8px;
   transition: all 0.2s 0s ease, all 0.2s 0s ease;
+  max-width: 250px;
+  margin: 0 2rem;
+  text-align: center;
 
   &:hover {
     transform: translate(0px, -8px);
