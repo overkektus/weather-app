@@ -14,7 +14,7 @@ export const googleGecodeAPI = createApi({
         url: '/json',
         params: {
           address: query,
-          key: 'AIzaSyC2ULQvdd1AhvnvwdvZLsZcmy7ZJsjuxTQ'
+          key: process.env.GOOGLE_API_KEY
         }
       })
     })
