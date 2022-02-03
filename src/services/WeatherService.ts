@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+
 import { ICurrentWeather } from '../models/ICurrentWeather';
+import { IForecast } from '../models/IForecast';
 
 interface fetchCurrentWeatherArgs {
   lon: number;
@@ -16,7 +18,17 @@ export const weatherAPI = createApi({
         params: {
           lat,
           lon,
-          appid: '5cdde5f4677674de9c708cfd0cfea404'
+          appid: process.env.OPENWEATHERMAP_API_KEY
+        }
+      })
+    }),
+    fetchForecast: build.query<IForecast, fetchCurrentWeatherArgs>({
+      query: ({ lon, lat }) => ({
+        url: '/forecast',
+        params: {
+          lat,
+          lon,
+          appid: process.env.OPENWEATHERMAP_API_KEY
         }
       })
     })
