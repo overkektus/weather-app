@@ -10,7 +10,7 @@ const Profile: React.FC = () => {
       <StyledBellIcon/>
       <Devider/>
       <StyledAvatar src="https://joeschmoe.io/api/v1/random" />
-      <p>William Jacobson</p>
+      <Name>William Jacobson</Name>
     </Wrapper>
   );
 };
@@ -18,10 +18,11 @@ const Profile: React.FC = () => {
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  padding: 10px 15px;
+  padding: 7px 15px;
   border: 1px solid ${colors.lightGray};
   border-radius: 15px;
   width: fit-content;
+  min-width: 250px;
 `;
 
 const Devider = styled.div`
@@ -40,6 +41,10 @@ const StyledAvatar = styled(Avatar)`
   margin: 0 15px;
   width: 35px;
   height: 35px;
-`
+`;
+
+const Name = styled.p`
+  white-space: nowrap;
+`;
 
 export default Profile;

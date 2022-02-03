@@ -79,7 +79,7 @@ const Date = styled.p`
 `;
 
 const TemperatureSection = styled.div`
-  margin-top: 20px;
+  margin-top: 2rem;
 `;
 
 const Temperature = styled.p`
@@ -102,7 +102,7 @@ const Country = styled.p`
 `;
 
 const HumiditySection = styled.div`
-  margin: 10px 0 5px 0;
+  margin: 0.6rem 0 0 0;
 `;
 
 const Humidity = styled.p`
