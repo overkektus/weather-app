@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Button, Tooltip } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
@@ -11,19 +12,15 @@ interface FavoriteCitiesItemProps {
   time: string;
   imgSrc?: string;
   onDeleteClick: Function;
+  onClick: Function;
 }
 
-const FavoriteCitiesItem: React.FC<FavoriteCitiesItemProps> = ({ onDeleteClick, placeId, cityName, time, imgSrc = 'https://traveller-eu.ru/sites/default/files/ukrashenie-doma-niderlandy-gorod-amsterdam-vecherom-doma-kanala-fary-nochnaya-peyzazh-shelkovoy-tkan-800x533.jpg' }) => {
-
-  const handleDeleteClick = () => {
-    onDeleteClick(placeId);
-  }
-
+const FavoriteCitiesItem: React.FC<FavoriteCitiesItemProps> = ({ onClick, onDeleteClick, placeId, cityName, time, imgSrc = 'https://traveller-eu.ru/sites/default/files/ukrashenie-doma-niderlandy-gorod-amsterdam-vecherom-doma-kanala-fary-nochnaya-peyzazh-shelkovoy-tkan-800x533.jpg' }) => {
   return (
-    <Wrapper>
+    <Wrapper onClick={() => onClick(placeId)}>
       <Card backgroundImage={imgSrc}>
         <Tooltip title="Remove from favorite">
-          <DeleteButton onClick={handleDeleteClick} type="primary" danger shape="circle" icon={<StyledXIcon />} />
+          <DeleteButton onClick={() => onDeleteClick(placeId)} type="primary" danger shape="circle" icon={<StyledXIcon />} />
         </Tooltip>
         <Info>
           <CurrentTime>{time}</CurrentTime>

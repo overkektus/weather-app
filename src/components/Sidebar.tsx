@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import * as colors from '../assets/styled-components/colors';
 import WeatherCard from './WeatherCard';
 import logo from '../assets/img/logo.png';
+import { useAppSelector } from '../hooks/redux';
 
 const menuItems = [
   {
@@ -30,6 +31,8 @@ const menuItems = [
 ];
 
 const Sidebar: React.FC = () => {
+  const { place } = useAppSelector(state => state.currentPlaceSlice);
+  
   return (
     <SideBar>
       <LogoWrapper>
@@ -47,7 +50,7 @@ const Sidebar: React.FC = () => {
           </StyledMenuItem>  
         )}
       </StyledMenu>
-      <WeatherCard />
+      {place && <WeatherCard currentPlace={place} />}
     </SideBar>
   );
 };

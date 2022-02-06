@@ -3,11 +3,13 @@ import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { List } from 'antd';
 import styled from 'styled-components';
 import { GeocodeResult } from '@googlemaps/google-maps-services-js';
+import { useLiveQuery } from 'dexie-react-hooks';
 
-import { googleGecodeAPI } from '../services/GoogleGecodeService';
+import { googleGeocodeAPI } from '../services/GoogleGeocodeService';
+import { currentPlaceSlice } from '../store/reducers/CurrentPlaceSlice';
 import { db } from '../models/db';
 import { SearchResultItem } from './SearchResultItem';
-import { useLiveQuery } from 'dexie-react-hooks';
+import { useAppDispatch } from '../hooks/redux';
 
 interface SearchResultProps {
   searchQuery: string;
@@ -18,8 +20,10 @@ interface SearchResultProps {
 
 const SearchResult: React.FC<SearchResultProps> = ({ searchQuery, isHidden, onMouseEnter, onMouseLeave }) => {
   const [filteredSearchQuery, setFilteredSearchQuery] = useState(searchQuery);
-  const { data, isLoading } = googleGecodeAPI.useFetchPlacesQuery({ query: filteredSearchQuery });
+  const { data, isLoading } = googleGeocodeAPI.useFetchPlacesByAddressQuery({ query: filteredSearchQuery });
   const places = data?.results.length ? data.results : [];
+
+  const dispatch = useAppDispatch();
 
   const savedPlaces = useLiveQuery(
     () => db.placeItems.toArray()
@@ -31,6 +35,10 @@ const SearchResult: React.FC<SearchResultProps> = ({ searchQuery, isHidden, onMo
 
   const handleRemoveFromFavorite = (place: GeocodeResult) => {
     db.placeItems.where('place_id').equals(place.place_id).delete();
+  }
+
+  const handleClick = (place: GeocodeResult) => {
+    dispatch(currentPlaceSlice.actions.setCurrentPlace(place));
   }
 
   useEffect(() => {
@@ -50,6 +58,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ searchQuery, isHidden, onMo
           <SearchResultItem 
             place={item}
             savedPlaces={savedPlaces}
+            onClick={handleClick}
             onClickAddToFavorite={handleAddToFavorite}
             onClickRemoveFromFavorite={handleRemoveFromFavorite}
           />

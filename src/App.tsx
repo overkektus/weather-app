@@ -3,7 +3,7 @@ import { Col, Row } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import styled from 'styled-components';
 
-import { googleGeocodeAPI } from './services/GoogleGecodeService';
+import { googleGeocodeAPI } from './services/GoogleGeocodeService';
 import { useAppDispatch, useAppSelector } from './hooks/redux';
 import { placeSlice } from './store/reducers/PlaceSlice';
 import useCurrentLocation from './hooks/useCurrentLocation';
@@ -16,7 +16,7 @@ function App() {
   useCurrentLocation();
   const { coordinates } = useAppSelector(state => state.geocoordinatesSlice);
   
-  const { data: places } = googleGeocodeAPI.useFetchPlaceByCoordinatesQuery({ lat: coordinates.lat, lng: coordinates.lon });
+  const { data: places } = googleGeocodeAPI.useFetchPlaceByCoordinatesQuery({ lat: coordinates.lat, lon: coordinates.lon });
   const dispatch = useAppDispatch();
 
   if (places) {

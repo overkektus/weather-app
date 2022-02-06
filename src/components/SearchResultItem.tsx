@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React from 'react';
 import { List, Button } from 'antd';
 import styled from 'styled-components'
@@ -6,28 +7,23 @@ import { GeocodeResult } from '@googlemaps/google-maps-services-js';
 interface SearchResultItemProps {
   place: GeocodeResult;
   savedPlaces: GeocodeResult[] | undefined;
+  onClick: Function;
   onClickAddToFavorite: Function;
   onClickRemoveFromFavorite: Function;
 }
 
-export const SearchResultItem: React.FC<SearchResultItemProps> = ({ savedPlaces, onClickAddToFavorite, onClickRemoveFromFavorite, place }) => {
+export const SearchResultItem: React.FC<SearchResultItemProps> = ({ savedPlaces, onClick, onClickAddToFavorite, onClickRemoveFromFavorite, place }) => {
   const isPresentInDB = !!savedPlaces?.filter(savedPlace => savedPlace.place_id === place.place_id).length;
-  
-  const handleAddClick = () => {
-    onClickAddToFavorite(place);
-  }
-
-  const handleRemoveClick = () => {
-    onClickRemoveFromFavorite(place);
-  }
 
   return (
     <StyledListItem>
-      {place.formatted_address}
+      <p onClick={() => onClick(place)}>
+        {place.formatted_address}
+      </p>
       {isPresentInDB ?
-        <StyledButton onClick={handleRemoveClick}>Remove from Favorite</StyledButton>
+        <StyledButton onClick={() => onClickRemoveFromFavorite(place)}>Remove from Favorite</StyledButton>
         :
-        <StyledButton onClick={handleAddClick}>Add To Favorite</StyledButton>
+        <StyledButton onClick={() => onClickAddToFavorite(place)}>Add To Favorite</StyledButton>
       }
     </StyledListItem>
   );

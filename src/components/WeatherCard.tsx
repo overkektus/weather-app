@@ -1,40 +1,61 @@
 import React from 'react';
 import styled from 'styled-components';
+import Spin from 'antd/lib/spin';
 import { rgba } from 'polished';
+import { GeocodeResult } from '@googlemaps/google-maps-services-js';
 
 import * as colors from '../assets/styled-components/colors';
+import { weatherAPI } from '../services/WeatherService';
+import { formateDateForWeatherCard } from '../utils';
+import { useAppSelector } from '../hooks/redux';
 
-const WeatherCard: React.FC = () => {
+interface WeatherCardProps {
+  currentPlace: GeocodeResult;
+}
+
+const WeatherCard: React.FC<WeatherCardProps> = ({ currentPlace }) => {
+  const { isLoading: isBrowserLocationLoading } = useAppSelector(state => state.geocoordinatesSlice);
+  const { data: currentWeather, isLoading } = weatherAPI.useFetchCurrentWeatherQuery({
+    lat: currentPlace.geometry.location.lat,
+    lon: currentPlace.geometry.location.lng,
+    units: 'metric'
+  });
+
   return (
     <Wrapper>
       <Card>
-        <DateTimeSection>
-          <Today>Today</Today>
-          <Time>11:44</Time>
-          <Date>Mon, 11 January</Date>
-        </DateTimeSection>
-        <TemperatureSection>
-          <Temperature>+4&#176;C</Temperature>
-        </TemperatureSection>
-        <PlaceSection>
-          <City>New York</City>
-          <Country>United States</Country>
-        </PlaceSection>
-        <HumiditySection>
-          <ProgressInfo>
-            <ProgressBarTitle>Humidity:</ProgressBarTitle>
-            <Humidity>70%</Humidity>
-          </ProgressInfo>
-          <Progressbar value={70} max={100} />
-        </HumiditySection>
-        <PrecipitationSection>
-          <ProgressInfo>
-            <ProgressBarTitle>Precipitation:</ProgressBarTitle>
-            <Precipitation>25%</Precipitation>
-          </ProgressInfo>
-          <Progressbar value={25} max={100} />
-        </PrecipitationSection>
-        <WindSection></WindSection>
+        {isLoading || isBrowserLocationLoading && <Spin tip="Loading..."></Spin>}
+        {currentWeather &&
+          <>
+            <DateTimeSection>
+              <Today>Today</Today>
+              <Time>11:44</Time>
+              <Date>{formateDateForWeatherCard(currentWeather?.dt)}</Date>
+            </DateTimeSection>
+            <TemperatureSection>
+              <Temperature>+4&#176;C</Temperature>
+            </TemperatureSection>
+            <PlaceSection>
+              <City>New York</City>
+              <Country>United States</Country>
+            </PlaceSection>
+            <HumiditySection>
+              <ProgressInfo>
+                <ProgressBarTitle>Humidity:</ProgressBarTitle>
+                <Humidity>70%</Humidity>
+              </ProgressInfo>
+              <Progressbar value={70} max={100} />
+            </HumiditySection>
+            <PrecipitationSection>
+              <ProgressInfo>
+                <ProgressBarTitle>Precipitation:</ProgressBarTitle>
+                <Precipitation>25%</Precipitation>
+              </ProgressInfo>
+              <Progressbar value={25} max={100} />
+            </PrecipitationSection>
+            <WindSection></WindSection>
+          </>
+        }
       </Card>
     </Wrapper>
   );

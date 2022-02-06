@@ -3,32 +3,39 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { ICurrentWeather } from '../models/ICurrentWeather';
 import { IForecast } from '../models/IForecast';
 
-interface fetchCurrentWeatherArgs {
+export type Units = 'metric' | 'imperial'
+
+interface FetchWeatherArgs {
   lon: number;
   lat: number;
+  units: Units;
 }
 
 export const weatherAPI = createApi({
   reducerPath: 'weatherAPI',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://api.openweathermap.org/data/2.5' }),
   endpoints: (build) => ({
-    fetchCurrentWeather: build.query<ICurrentWeather, fetchCurrentWeatherArgs>({
-      query: ({ lon, lat }) => ({
+    fetchCurrentWeather: build.query<ICurrentWeather, FetchWeatherArgs>({
+      query: ({ lon, lat, units = 'metric' }) => ({
         url: '/weather',
         params: {
           lat,
           lon,
-          appid: process.env.OPENWEATHERMAP_API_KEY
+          units,
+          appid: '5cdde5f4677674de9c708cfd0cfea404',
+          // appid: process.env.OPENWEATHERMAP_API_KEY
         }
       })
     }),
-    fetchForecast: build.query<IForecast, fetchCurrentWeatherArgs>({
-      query: ({ lon, lat }) => ({
+    fetchForecast: build.query<IForecast, FetchWeatherArgs>({
+      query: ({ lon, lat, units = 'metric' }) => ({
         url: '/forecast',
         params: {
           lat,
           lon,
-          appid: process.env.OPENWEATHERMAP_API_KEY
+          units,
+          appid: '5cdde5f4677674de9c708cfd0cfea404',
+          // appid: process.env.OPENWEATHERMAP_API_KEY,
         }
       })
     })

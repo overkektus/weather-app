@@ -5,3 +5,7 @@ export const Title = styled.h2`
   font-weight: 600;
   margin-bottom: 20px;
 `;
+
+export const SectionWrapper = styled.div`
+
+`;
