@@ -1,34 +1,43 @@
 import React from 'react';
 import { Col, Row } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
-import Sider from 'antd/lib/layout/Sider';
 import styled from 'styled-components';
 
+import { googleGeocodeAPI } from './services/GoogleGecodeService';
+import { useAppDispatch, useAppSelector } from './hooks/redux';
+import { placeSlice } from './store/reducers/PlaceSlice';
+import useCurrentLocation from './hooks/useCurrentLocation';
 import Sidebar from './components/Sidebar';
 import SearchContainer from './components/SearchContainer';
 import FavoriteCitiesContainer from './components/FavoriteCitiesContainer';
+import ForecastContainer from './components/ForecastContainer';
 
 function App() {
+  useCurrentLocation();
+  const { coordinates } = useAppSelector(state => state.geocoordinatesSlice);
+  
+  const { data: places } = googleGeocodeAPI.useFetchPlaceByCoordinatesQuery({ lat: coordinates.lat, lng: coordinates.lon });
+  const dispatch = useAppDispatch();
+
+  if (places) {
+    dispatch(placeSlice.actions.setCurrentPlace(places.results[0]));
+  }
+
   return (
-    <Row>
-      <StyledSider>
+    <Row wrap={false}>
+      <Col flex="300px">
         <Sidebar/>
-      </StyledSider>
-      <Col span={18}>
+      </Col>
+      <Col flex="auto">
         <StyledContent>
           <SearchContainer/>
           <FavoriteCitiesContainer />
+          <ForecastContainer />
         </StyledContent>
       </Col>
     </Row>
   );
 }
-
-const StyledSider = styled(Sider)`
-  width: 250px !important;
-  max-width: 250px !important;
-  flex: 0 0 250px !important;
-`;
 
 const StyledContent = styled(Content)`
   padding: 1.5rem;
