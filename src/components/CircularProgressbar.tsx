@@ -1,6 +1,9 @@
 import React from 'react';
 import range from 'lodash/range';
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+
+import * as colors from '../assets/styled-components/colors';
 
 interface CircularProgressbarProps { 
   value: number;
@@ -10,12 +13,13 @@ const CircularProgressbar: React.FC<CircularProgressbarProps> = ({ value }) => {
   return (
     <CircularProgressbarWithChildren
       value={value}
-      // text={`${80}%`}
       strokeWidth={10}
       circleRatio={0.75}
       styles={buildStyles({
         rotation: 1 / 2 + 1 / 8,
-        strokeLinecap: 'butt'
+        strokeLinecap: 'butt',
+        pathColor: colors.progressValue,
+        trailColor: colors.progressBar,
       })}
     >
       <RadialSeparators
@@ -62,7 +66,7 @@ const RadialSeparators: React.FC<RadialSeparatorsProps> = ({ count, style }) => 
   const turns = 1 / count;
   return <>
     {range(count).map(index => (
-      <Separator turns={index * turns} style={style} />
+      <Separator key={index} turns={index * turns} style={style} />
     ))}
   </>
 }

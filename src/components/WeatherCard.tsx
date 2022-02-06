@@ -2,12 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import Spin from 'antd/lib/spin';
 import { rgba } from 'polished';
-import { GeocodeResult } from '@googlemaps/google-maps-services-js';
+import { GeocodeResult, PlaceType2 } from '@googlemaps/google-maps-services-js';
 
 import * as colors from '../assets/styled-components/colors';
 import { weatherAPI } from '../services/WeatherService';
-import { formateDateForWeatherCard } from '../utils';
+import { formateDateForWeatherCard, formateTime, formateTemperature, formateWindSpeed, getWindSpeedPercent } from '../utils';
 import { useAppSelector } from '../hooks/redux';
+import CircularProgressbar from './CircularProgressbar';
 
 interface WeatherCardProps {
   currentPlace: GeocodeResult;
@@ -21,40 +22,45 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ currentPlace }) => {
     units: 'metric'
   });
 
+  const country = currentPlace.address_components.filter(component => component.types.includes(PlaceType2.country))[0];
+  const city = currentPlace.address_components.filter(component => component.types.includes(PlaceType2.locality))[0];
+
   return (
     <Wrapper>
       <Card>
         {isLoading || isBrowserLocationLoading && <Spin tip="Loading..."></Spin>}
         {currentWeather &&
-          <>
-            <DateTimeSection>
-              <Today>Today</Today>
-              <Time>11:44</Time>
-              <Date>{formateDateForWeatherCard(currentWeather?.dt)}</Date>
-            </DateTimeSection>
+          <div>
+            <TopSection>
+              <StyledImg src={require(`../assets/img/icons/${currentWeather.weather[0].icon}.png`)}/>
+              <DateTimeSection>
+                <Today>Today</Today>
+                <Time>{formateTime(currentWeather.dt)}</Time>
+                <Date>{formateDateForWeatherCard(currentWeather.dt)}</Date>
+              </DateTimeSection>
+            </TopSection>
             <TemperatureSection>
-              <Temperature>+4&#176;C</Temperature>
+              <Temperature>{formateTemperature(currentWeather.main.temp, 'metric')}</Temperature>
             </TemperatureSection>
             <PlaceSection>
-              <City>New York</City>
-              <Country>United States</Country>
+              {city && <City>{city.long_name}</City>}
+              {country && <Country>{country.long_name}</Country>}
             </PlaceSection>
             <HumiditySection>
               <ProgressInfo>
                 <ProgressBarTitle>Humidity:</ProgressBarTitle>
-                <Humidity>70%</Humidity>
+                <Humidity>{currentWeather.main.humidity}%</Humidity>
               </ProgressInfo>
-              <Progressbar value={70} max={100} />
+              <Progressbar value={currentWeather.main.humidity} max={100} />
             </HumiditySection>
-            <PrecipitationSection>
-              <ProgressInfo>
-                <ProgressBarTitle>Precipitation:</ProgressBarTitle>
-                <Precipitation>25%</Precipitation>
-              </ProgressInfo>
-              <Progressbar value={25} max={100} />
-            </PrecipitationSection>
-            <WindSection></WindSection>
-          </>
+            <WindSection>
+              <WindTitle>Wind:</WindTitle>
+              <CircularProgressbarWrapper>
+                <CircularProgressbar value={getWindSpeedPercent(currentWeather.wind.speed)}/>
+              </CircularProgressbarWrapper>
+              <WindSpeed>{formateWindSpeed(currentWeather.wind.speed, 'metric')}</WindSpeed>
+            </WindSection>
+          </div>
         }
       </Card>
     </Wrapper>
@@ -67,13 +73,21 @@ const Wrapper = styled.div`
 
 const Card = styled.div`
   display: flex;
-  padding: 20px 15px;
+  padding: 2.5rem;
   flex-direction: column;
   font-sieze: 12px;
   align-items: center;
   background-color: white;
   border-radius: 15px;
   color: ${colors.dartBlue}
+`;
+
+const TopSection = styled.div`
+  display: flex;
+`;
+
+const StyledImg = styled.img`
+  height: 4rem;
 `;
 
 const ProgressInfo = styled.div`
@@ -100,6 +114,8 @@ const Date = styled.p`
 `;
 
 const TemperatureSection = styled.div`
+  display: flex;
+  justify-content: center;
   margin-top: 2rem;
 `;
 
@@ -115,6 +131,7 @@ const PlaceSection = styled.div`
 const City = styled.p`
   font-size: 2.5em;
   font-weight: 500;
+  line-height: 1em;
 `;
 
 const Country = styled.p`
@@ -136,6 +153,7 @@ const ProgressBarTitle = styled.p`
 
 const Progressbar = styled.progress`
   border-radius: 7px;
+  width: 100%;
   height: 4px;
   transform: translate(0px, -8px);
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.2);
@@ -151,15 +169,20 @@ const Progressbar = styled.progress`
   }
 `;
 
-const PrecipitationSection = styled.div`
-
-`;
-
-const Precipitation = styled.p`
-
-`;
-
 const WindSection = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+`;
+
+const CircularProgressbarWrapper = styled.div`
+  width: 3rem;
+`;
+
+const WindTitle = styled.p`
+`;
+
+const WindSpeed = styled.p`
 
 `;
 

@@ -8,6 +8,7 @@ const WeatherContainer: React.FC = () => {
 
   return (
     <>
+      {!place && <p>Choose </p>}
       {place && <WeatherCard currentPlace={place} />}
     </>
   );

@@ -1,11 +1,11 @@
 import React from 'react';
 import { HomeIcon, ChartBarIcon, MapIcon, CalendarIcon, CogIcon } from '@heroicons/react/outline';
 import { Divider, Menu } from 'antd';
-import styled from 'styled-components'
+import styled from 'styled-components';
+
 import * as colors from '../assets/styled-components/colors';
-import WeatherCard from './WeatherCard';
 import logo from '../assets/img/logo.png';
-import { useAppSelector } from '../hooks/redux';
+import WeatherContainer from './WeatherContainer';
 
 const menuItems = [
   {
@@ -31,8 +31,6 @@ const menuItems = [
 ];
 
 const Sidebar: React.FC = () => {
-  const { place } = useAppSelector(state => state.currentPlaceSlice);
-  
   return (
     <SideBar>
       <LogoWrapper>
@@ -50,7 +48,7 @@ const Sidebar: React.FC = () => {
           </StyledMenuItem>  
         )}
       </StyledMenu>
-      {place && <WeatherCard currentPlace={place} />}
+      <WeatherContainer />
     </SideBar>
   );
 };

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { googleGeocodeAPI } from './services/GoogleGeocodeService';
 import { useAppDispatch, useAppSelector } from './hooks/redux';
-import { placeSlice } from './store/reducers/PlaceSlice';
+import { currentPlaceSlice } from './store/reducers/CurrentPlaceSlice';
 import useCurrentLocation from './hooks/useCurrentLocation';
 import Sidebar from './components/Sidebar';
 import SearchContainer from './components/SearchContainer';
@@ -20,7 +20,7 @@ function App() {
   const dispatch = useAppDispatch();
 
   if (places) {
-    dispatch(placeSlice.actions.setCurrentPlace(places.results[0]));
+    dispatch(currentPlaceSlice.actions.setCurrentPlace(places.results[0]));
   }
 
   return (
