@@ -5,21 +5,23 @@ import { rgba } from 'polished';
 import { GeocodeResult, PlaceType2 } from '@googlemaps/google-maps-services-js';
 
 import * as colors from '../assets/styled-components/colors';
-import { weatherAPI } from '../services/WeatherService';
+import { Units, weatherAPI } from '../services/WeatherService';
 import { formateDateForWeatherCard, formateTime, formateTemperature, formateWindSpeed, getWindSpeedPercent } from '../utils';
 import { useAppSelector } from '../hooks/redux';
 import CircularProgressbar from './CircularProgressbar';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 interface WeatherCardProps {
   currentPlace: GeocodeResult;
 }
 
 const WeatherCard: React.FC<WeatherCardProps> = ({ currentPlace }) => {
+  const [units] = useLocalStorage<Units>('units', 'metric');
   const { isLoading: isBrowserLocationLoading } = useAppSelector(state => state.geocoordinatesSlice);
   const { data: currentWeather, isLoading } = weatherAPI.useFetchCurrentWeatherQuery({
     lat: currentPlace.geometry.location.lat,
     lon: currentPlace.geometry.location.lng,
-    units: 'metric'
+    units
   });
 
   const country = currentPlace.address_components.filter(component => component.types.includes(PlaceType2.country))[0];
@@ -40,7 +42,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ currentPlace }) => {
               </DateTimeSection>
             </TopSection>
             <TemperatureSection>
-              <Temperature>{formateTemperature(currentWeather.main.temp, 'metric')}</Temperature>
+              <Temperature>{formateTemperature(currentWeather.main.temp, units)}</Temperature>
             </TemperatureSection>
             <PlaceSection>
               {city && <City>{city.long_name}</City>}
@@ -58,7 +60,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ currentPlace }) => {
               <CircularProgressbarWrapper>
                 <CircularProgressbar value={getWindSpeedPercent(currentWeather.wind.speed)}/>
               </CircularProgressbarWrapper>
-              <WindSpeed>{formateWindSpeed(currentWeather.wind.speed, 'metric')}</WindSpeed>
+              <WindSpeed>{formateWindSpeed(currentWeather.wind.speed, units)}</WindSpeed>
             </WindSection>
           </div>
         }

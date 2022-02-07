@@ -6,12 +6,16 @@ import { Select, Divider } from 'antd';
 import WeatherChart from './WeatherChart';
 import { Title } from './common';
 import * as colors from '../assets/styled-components/colors';
+import { Units } from '../services/WeatherService';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const { Option: SelectOption } = Select;
 
 const WeatherChartContainer: React.FC = () => {
-  const handleUnitChange = () => {
-    console.log('change');
+  const [units, setUnits] = useLocalStorage<Units>('units', 'metric');
+
+  const handleUnitChange = (value: Units) => {
+    setUnits(value);
   }
 
   return (
@@ -24,14 +28,12 @@ const WeatherChartContainer: React.FC = () => {
             <StyledDivider type="vertical" />
             <Period>5 Day</Period>
           </PeriodWrapper>
-          <Select defaultValue="lucy" onChange={handleUnitChange}>
-            <SelectOption value="jack">Jack</SelectOption>
-            <SelectOption value="lucy">Lucy</SelectOption>
+          <Select defaultValue={units} onChange={handleUnitChange}>
+            <SelectOption value="metric">metric</SelectOption>
+            <SelectOption value="imperial">imperial</SelectOption>
           </Select>
         </ChartSettings>
-        <div>
-          <WeatherChart/>
-        </div>
+        <WeatherChart/>
       </ChartWrapper>
     </Wrapper>
   );

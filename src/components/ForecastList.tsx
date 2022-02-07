@@ -5,18 +5,20 @@ import { ScrollingCarousel } from '@trendyol-js/react-carousel';
 import { ChevronDoubleRightIcon } from '@heroicons/react/solid';
 
 import ForecastItem from './ForecastItem';
-import { weatherAPI } from '../services/WeatherService';
+import { Units, weatherAPI } from '../services/WeatherService';
 import * as colors from '../assets/styled-components/colors';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 interface ForecastListProps {
   currentPlace: GeocodeResult;
 }
 
 const ForecastList: React.FC<ForecastListProps> = ({ currentPlace }) => {
+  const [units] = useLocalStorage<Units>('units', 'metric');
   const { data, isLoading } = weatherAPI.useFetchForecastQuery({
     lat: currentPlace.geometry.location.lat,
     lon: currentPlace.geometry.location.lng,
-    units: 'metric'
+    units,
   });
   
   return (
