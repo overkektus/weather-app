@@ -4,5 +4,6 @@ export const lightWhite = '#F5F5FF';
 export const lightGray = '#CFD5DB';
 export const darkGray = '#6E8093';
 export const dartBlue = '#0F2348';
+export const chartBackground = '#F8F9FB';
 export const progressBar = '#DBDFF4';
 export const progressValue = '#FDAC47';

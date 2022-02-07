@@ -76,7 +76,7 @@ const SideBar = styled.div`
   flex-direction: column;
   justify-content: space-between;
   background-color: ${colors.pramary};
-  min-height: 100vh;
+  min-height: 100%;
 `
 
 const StyledDivider = styled(Divider)`

@@ -11,6 +11,7 @@ import Sidebar from './components/Sidebar';
 import SearchContainer from './components/SearchContainer';
 import FavoriteCitiesContainer from './components/FavoriteCitiesContainer';
 import ForecastContainer from './components/ForecastContainer';
+import WeatherChartContainer from './components/WeatherChartContainer';
 
 function App() {
   useCurrentLocation();
@@ -33,6 +34,7 @@ function App() {
           <SearchContainer/>
           <FavoriteCitiesContainer />
           <ForecastContainer />
+          <WeatherChartContainer />
         </StyledContent>
       </Col>
     </Row>
