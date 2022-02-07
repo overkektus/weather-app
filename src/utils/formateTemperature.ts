@@ -1,9 +1,9 @@
 import { Units } from '../services/WeatherService';
 
-export const formateTemperature = (temp: number, units?: Units): string => {
+export const formateTemperature = (temp: number, units?: Units, precision: number = 0): string => {
   let unitSign;
 
-  const roundedTemp = Number(temp.toFixed(1));
+  const roundedTemp = Number(temp.toFixed(precision));
   
   switch(units) {
   case 'metric':
