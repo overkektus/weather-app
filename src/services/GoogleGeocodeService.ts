@@ -19,8 +19,7 @@ export const googleGeocodeAPI = createApi({
         url: '/json',
         params: {
           address: query,
-          key: 'AIzaSyC2ULQvdd1AhvnvwdvZLsZcmy7ZJsjuxTQ'
-          // key: process.env.GOOGLE_API_KEY
+          key: process.env.REACT_APP_GOOGLE_API_KEY
         }
       })
     }),
@@ -29,8 +28,7 @@ export const googleGeocodeAPI = createApi({
         url: '/json',
         params: {
           latlng: `${lat},${lon}`,
-          key: 'AIzaSyC2ULQvdd1AhvnvwdvZLsZcmy7ZJsjuxTQ'
-          // key: process.env.GOOGLE_API_KEY
+          key: process.env.REACT_APP_GOOGLE_API_KEY
         }
       })
     })

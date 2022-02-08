@@ -22,8 +22,7 @@ export const weatherAPI = createApi({
           lat,
           lon,
           units,
-          appid: '5cdde5f4677674de9c708cfd0cfea404',
-          // appid: process.env.OPENWEATHERMAP_API_KEY
+          appid: process.env.REACT_APP_OPENWEATHERMAP_API_KEY
         }
       })
     }),
@@ -34,8 +33,7 @@ export const weatherAPI = createApi({
           lat,
           lon,
           units,
-          appid: '5cdde5f4677674de9c708cfd0cfea404',
-          // appid: process.env.OPENWEATHERMAP_API_KEY,
+          appid: process.env.REACT_APP_OPENWEATHERMAP_API_KEY,
         }
       })
     })
