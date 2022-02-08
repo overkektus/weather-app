@@ -8,16 +8,24 @@ import { currentPlaceSlice } from '../store/reducers/CurrentPlaceSlice';
 import { Title } from './common';
 import FavoriteCitiesItem from './FavoriteCityItem';
 import { db } from '../models/db';
-import { useAppDispatch } from '../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { googleGeocodeAPI } from '../services/GoogleGeocodeService';
 
 const FavoriteCitiesContainer: React.FC = () => {
+  const { coordinates } = useAppSelector(state => state.geocoordinatesSlice);
   const dispatch = useAppDispatch();
+  
+  const { data: currentPlaces } = googleGeocodeAPI.useFetchPlaceByCoordinatesQuery({ lat: coordinates.lat, lon: coordinates.lon });
   
   const savedPlaces = useLiveQuery(
     () => db.placeItems.toArray()
   );
 
-  const handleRemoveFromFavorite = (placeId: string) => {
+  const handleRemoveFromFavorite = async(placeId: string) => {
+    const countPlaces = await db.placeItems.count();
+    if (countPlaces === 1 && currentPlaces) {
+      dispatch(currentPlaceSlice.actions.setCurrentPlace(currentPlaces.results[0]));
+    }
     db.placeItems.where('place_id').equals(placeId).delete();
   }
 
