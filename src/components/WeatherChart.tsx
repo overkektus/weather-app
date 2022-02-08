@@ -1,72 +1,89 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React from 'react';
-import { Line } from 'react-chartjs-2';
-import faker from '@faker-js/faker';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import styled from 'styled-components';
+import { Select, Divider, Spin } from 'antd';
+import { GeocodeResult } from '@googlemaps/google-maps-services-js';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import Chart from './Chart';
+import * as colors from '../assets/styled-components/colors';
+import { Units } from '../services/WeatherService';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { weatherAPI } from '../services/WeatherService';
+import { formateDateForForecastCard, formateTime } from '../utils';
 
-export const options = {
-  responsive: true,
-  interaction: {
-    mode: 'index' as const,
-    intersect: false,
-  },
-  stacked: false,
-  plugins: {
-  },
-  scales: {
-    y: {
-      type: 'linear' as const,
-      display: true,
-      position: 'left' as const,
-    },
-    y1: {
-      type: 'linear' as const,
-      display: true,
-      position: 'right' as const,
-      grid: {
-        drawOnChartArea: false,
-      },
-    },
-  },
-};
+const { Option: SelectOption } = Select;
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+interface WeatherChartProps {
+  currentPlace: GeocodeResult;
+}
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      yAxisID: 'y',
-    },
-  ],
-};
+const WeatherChart: React.FC<WeatherChartProps> = ({ currentPlace }) => {
+  const [units, setUnits] = useLocalStorage<Units>('units', 'metric');
 
-const WeatherChart: React.FC = () => {
+  const { data, isLoading } = weatherAPI.useFetchForecastQuery({
+    lat: currentPlace.geometry.location.lat,
+    lon: currentPlace.geometry.location.lng,
+    units,
+  });
+
+  const labels = data?.list.map(item => `${formateDateForForecastCard(item.dt)}\n${formateTime(item.dt)}`);
+  const chartData = data?.list.map(item => item.main.temp);
+
+  const handleUnitChange = (value: Units) => {
+    setUnits(value);
+  }
+
   return (
-    <Line options={options} data={data} />
+    <Wrapper>
+      <ChartWrapper>
+        <ChartSettings>
+          <PeriodWrapper>
+            <Period>Day</Period>
+            <StyledDivider type="vertical" />
+            <Period>5 Day</Period>
+          </PeriodWrapper>
+          <Select defaultValue={units} onChange={handleUnitChange}>
+            <SelectOption value="metric">metric</SelectOption>
+            <SelectOption value="imperial">imperial</SelectOption>
+          </Select>
+        </ChartSettings>
+        {isLoading && <Spin tip="Loading..."></Spin>}
+        {data && chartData && labels && <Chart labels={labels} data={chartData}/>}
+      </ChartWrapper>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ChartWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: ${colors.chartBackground};
+  border-radius: 15px;
+  padding: 1rem 2rem;
+`;
+
+const ChartSettings = styled.div`
+  display: flex;
+  padding: 2rem;
+  justify-content: space-between;
+`;
+
+const Period = styled.p`
+
+`;
+
+const PeriodWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const StyledDivider = styled(Divider)`
+
+`;
 
 export default WeatherChart;

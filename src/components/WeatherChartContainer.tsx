@@ -1,74 +1,17 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React from 'react';
-import styled from 'styled-components';
-import { Select, Divider } from 'antd';
 
-import WeatherChart from './WeatherChart';
-import { Title } from './common';
-import * as colors from '../assets/styled-components/colors';
-import { Units } from '../services/WeatherService';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { useAppSelector } from '../hooks/redux';
+import { SectionWrapper, Title } from './common';
+import WeatherChartContainer from './WeatherChart';
 
-const { Option: SelectOption } = Select;
-
-const WeatherChartContainer: React.FC = () => {
-  const [units, setUnits] = useLocalStorage<Units>('units', 'metric');
-
-  const handleUnitChange = (value: Units) => {
-    setUnits(value);
-  }
-
+const WeatherChart: React.FC = () => {
+  const { place } = useAppSelector(state => state.currentPlaceSlice);
   return (
-    <Wrapper>
-      <Title>Weather Graph</Title>
-      <ChartWrapper>
-        <ChartSettings>
-          <PeriodWrapper>
-            <Period>Day</Period>
-            <StyledDivider type="vertical" />
-            <Period>5 Day</Period>
-          </PeriodWrapper>
-          <Select defaultValue={units} onChange={handleUnitChange}>
-            <SelectOption value="metric">metric</SelectOption>
-            <SelectOption value="imperial">imperial</SelectOption>
-          </Select>
-        </ChartSettings>
-        <WeatherChart/>
-      </ChartWrapper>
-    </Wrapper>
+    <SectionWrapper>
+      {place && <Title>Weather Graph</Title>}
+      {place && <WeatherChartContainer currentPlace={place} />}
+    </SectionWrapper>
   );
 };
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ChartWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: ${colors.chartBackground};
-  border-radius: 15px;
-  padding: 1rem 2rem;
-`;
-
-const ChartSettings = styled.div`
-  display: flex;
-  padding: 2rem;
-  justify-content: space-between;
-`;
-
-const Period = styled.p`
-
-`;
-
-const PeriodWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const StyledDivider = styled(Divider)`
-
-`;
-
-export default WeatherChartContainer;
+export default WeatherChart;
