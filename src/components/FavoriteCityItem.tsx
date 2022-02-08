@@ -16,11 +16,17 @@ interface FavoriteCitiesItemProps {
 }
 
 const FavoriteCitiesItem: React.FC<FavoriteCitiesItemProps> = ({ onClick, onDeleteClick, placeId, cityName, time, imgSrc = 'https://traveller-eu.ru/sites/default/files/ukrashenie-doma-niderlandy-gorod-amsterdam-vecherom-doma-kanala-fary-nochnaya-peyzazh-shelkovoy-tkan-800x533.jpg' }) => {
+  const handleDeleteClick = (event: any) => {
+    event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+    onDeleteClick(placeId);
+  }
+
   return (
     <Wrapper onClick={() => onClick(placeId)}>
       <Card backgroundImage={imgSrc}>
         <Tooltip title="Remove from favorite">
-          <DeleteButton onClick={() => onDeleteClick(placeId)} type="primary" danger shape="circle" icon={<StyledXIcon />} />
+          <DeleteButton onClick={handleDeleteClick} type="primary" danger shape="circle" icon={<StyledXIcon />} />
         </Tooltip>
         <Info>
           <CurrentTime>{time}</CurrentTime>
