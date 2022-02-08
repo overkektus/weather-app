@@ -49,6 +49,7 @@ const ChartWrapper = styled.div`
   flex-direction: column;
   background-color: ${colors.chartBackground};
   border-radius: 15px;
+  padding: 1rem 2rem;
 `;
 
 const ChartSettings = styled.div`

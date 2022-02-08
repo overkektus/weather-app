@@ -74,7 +74,7 @@ const LogoWrapper = styled.div`
 const SideBar = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   background-color: ${colors.pramary};
   min-height: 100%;
 `

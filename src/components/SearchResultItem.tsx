@@ -21,7 +21,7 @@ export const SearchResultItem: React.FC<SearchResultItemProps> = ({ savedPlaces,
         {place.formatted_address}
       </p>
       {isPresentInDB ?
-        <StyledButton onClick={() => onClickRemoveFromFavorite(place)}>Remove from Favorite</StyledButton>
+        <StyledButton type="primary" danger onClick={() => onClickRemoveFromFavorite(place)}>Remove from Favorite</StyledButton>
         :
         <StyledButton onClick={() => onClickAddToFavorite(place)}>Add To Favorite</StyledButton>
       }
