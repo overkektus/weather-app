@@ -42,7 +42,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ currentPlace }) => {
               </DateTimeSection>
             </TopSection>
             <TemperatureSection>
-              <Temperature>{formateTemperature(currentWeather.main.temp, units)}</Temperature>
+              <Temperature>{formateTemperature(currentWeather.main.temp, units, 1)}</Temperature>
             </TemperatureSection>
             <PlaceSection>
               {city && <City>{city.long_name}</City>}
@@ -71,6 +71,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ currentPlace }) => {
 
 const Wrapper = styled.div`
   padding: 20px;
+  max-width: 300px;
 `;
 
 const Card = styled.div`
