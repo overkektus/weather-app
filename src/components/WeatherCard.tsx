@@ -58,7 +58,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ currentPlace }) => {
             <WindSection>
               <WindTitle>Wind:</WindTitle>
               <CircularProgressbarWrapper>
-                <CircularProgressbar value={getWindSpeedPercent(currentWeather.wind.speed)}/>
+                <CircularProgressbar value={getWindSpeedPercent(currentWeather.wind.speed, units)}/>
               </CircularProgressbarWrapper>
               <WindSpeed>{formateWindSpeed(currentWeather.wind.speed, units)}</WindSpeed>
             </WindSection>

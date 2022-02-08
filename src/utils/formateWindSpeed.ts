@@ -19,8 +19,16 @@ export const formateWindSpeed = (speed: number, units?: Units): string => {
   return formattedWindSpeed;
 }
 
-const maximumDisplayedWindSpeed = 20;
+const maxDisplayedWindSpeedmps = 20;
+const maxDisplayedWindSpeedMpH = 45;
 
-export const getWindSpeedPercent = (windSpeed: number): number => {
-  return windSpeed * 100 / maximumDisplayedWindSpeed;
+export const getWindSpeedPercent = (windSpeed: number, units?: Units): number => {
+  switch(units) {
+  case 'metric':
+    return windSpeed * 100 / maxDisplayedWindSpeedmps;
+  case 'imperial':
+    return windSpeed * 100 / maxDisplayedWindSpeedMpH;
+  default: 
+    return windSpeed * 100 / maxDisplayedWindSpeedmps;
+  }
 }
