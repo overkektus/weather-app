@@ -1,11 +1,12 @@
 import React from 'react';
-import { HomeIcon, ChartBarIcon, MapIcon, CalendarIcon, CogIcon } from '@heroicons/react/outline';
-import { Divider, Menu } from 'antd';
+import { HomeIcon, ChartBarIcon, MapIcon, CalendarIcon, CogIcon } from '@heroicons/react/24/outline';
+import { Divider } from 'antd';
 import styled from 'styled-components';
 
 import * as colors from '../assets/styled-components/colors';
 import logo from '../assets/img/logo.png';
 import WeatherContainer from './WeatherContainer';
+import MenuItem from './MenuItem';
 
 const menuItems = [
   {
@@ -40,18 +41,21 @@ const Sidebar: React.FC = () => {
         </AppName>
       </LogoWrapper>
       <StyledDivider />
-      <StyledMenu>
-        {menuItems.map(item =>
-          <StyledMenuItem key={item.title}>
-            <Icon>{item.icon}</Icon>
-            <p>{item.title}</p>
-          </StyledMenuItem>  
+      <Menu>
+        {menuItems.map(item => 
+          <MenuItem key={item.title} text={item.title} icon={item.icon} />
         )}
-      </StyledMenu>
-      <WeatherContainer />
+      </Menu>
+      <WeatherCardWrapper>
+        <WeatherContainer />
+      </WeatherCardWrapper>
     </SideBar>
   );
 };
+
+const WeatherCardWrapper = styled.div`
+  flex-grow: 1;
+`;
 
 const Logo = styled.img`
   width: 2.5rem;
@@ -73,41 +77,20 @@ const LogoWrapper = styled.div`
 
 const SideBar = styled.div`
   display: flex;
+  height: 100%;
+  width: 300px;
   flex-direction: column;
   justify-content: flex-start;
   background-color: ${colors.pramary};
-  min-height: 100%;
 `
 
 const StyledDivider = styled(Divider)`
-  border-top: 1px solid ${colors.second}
+  border-top: 1px solid ${colors.second};
   margin: 0;
 `
 
-const StyledMenu = styled(Menu)`
-  background-color: ${colors.pramary};
-  border: none;
-`
-
-const StyledMenuItem = styled(Menu.Item)`
-  background-color: ${colors.pramary};
-  border-left: 2px solid transparent;
-  color: ${colors.lightWhite};
-  &:hover {
-    color: white !important;
-    border-left: 2px solid white;
-  }
-
-  > span {
-    display: flex;
-    align-items: center;
-  }
-`
-
-const Icon = styled.div`
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-`
+const Menu = styled.ul`
+  
+`;
 
 export default Sidebar;
