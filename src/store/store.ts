@@ -1,21 +1,21 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { weatherAPI } from '../services/WeatherService';
-import { googleGeocodeAPI } from '../services/GoogleGeocodeService';
+import { EnhancedStore, combineReducers, configureStore } from '@reduxjs/toolkit';
+
+import { backendAPI } from 'services/BackendService';
+import { sunriseSunsetAPI } from 'services/SunriseSunsetService';
 import geocoordinatesSlice from './reducers/GeocoordintatesSlice';
 import currentPlaceSlice from './reducers/CurrentPlaceSlice';
 
 const rootReducer = combineReducers({
   geocoordinatesSlice,
   currentPlaceSlice,
-  [weatherAPI.reducerPath]: weatherAPI.reducer,
-  [googleGeocodeAPI.reducerPath]: googleGeocodeAPI.reducer
+  [backendAPI.reducerPath]: backendAPI.reducer,
+  [sunriseSunsetAPI.reducerPath]: sunriseSunsetAPI.reducer,
 })
 
-export const setupStore = () => {
+export const setupStore = (): EnhancedStore => {
   return configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(weatherAPI.middleware, googleGeocodeAPI.middleware)
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sunriseSunsetAPI.middleware, backendAPI.middleware)
   });
 }
 

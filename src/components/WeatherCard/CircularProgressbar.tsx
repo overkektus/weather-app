@@ -3,7 +3,7 @@ import range from 'lodash/range';
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-import * as colors from '../assets/styled-components/colors';
+import * as colors from 'assets/styled-components/colors';
 
 interface CircularProgressbarProps { 
   value: number;

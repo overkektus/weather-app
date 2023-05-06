@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable no-undef */
 import { RefObject, useEffect, useRef } from 'react';
 
 function useEventListener<K extends keyof WindowEventMap>(
   eventName: K,
   handler: (event: WindowEventMap[K]) => void,
 ): void
+// eslint-disable-next-line no-redeclare
 function useEventListener<
   K extends keyof HTMLElementEventMap,
   T extends HTMLElement = HTMLDivElement,
@@ -13,6 +16,7 @@ function useEventListener<
   element: RefObject<T>,
 ): void
 
+// eslint-disable-next-line no-redeclare
 function useEventListener<
   KW extends keyof WindowEventMap,
   KH extends keyof HTMLElementEventMap,

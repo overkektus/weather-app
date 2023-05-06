@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { useAppSelector } from '../hooks/redux';
+import { useAppSelector } from 'hooks/redux';
+import { Title, SectionWrapper } from 'components/common/Primitives';
 import ForecastList from './ForecastList';
-import { Title, SectionWrapper } from './common';
 
 const ForecastContainer: React.FC = () => {
   const { place } = useAppSelector(state => state.currentPlaceSlice);

@@ -1,9 +1,9 @@
-import { Units } from '../services/WeatherService';
+import { Units } from 'services/BackendService';
 
 export const formateWindSpeed = (speed: number, units?: Units): string => {
   let unitSign;
 
-  switch(units) {
+  switch (units) {
   case 'metric':
     unitSign = 'm/s';
     break;
@@ -17,18 +17,21 @@ export const formateWindSpeed = (speed: number, units?: Units): string => {
   const formattedWindSpeed = `${speed}${unitSign}`;
 
   return formattedWindSpeed;
-}
+};
 
 const maxDisplayedWindSpeedmps = 20;
 const maxDisplayedWindSpeedMpH = 45;
 
-export const getWindSpeedPercent = (windSpeed: number, units?: Units): number => {
-  switch(units) {
+export const getWindSpeedPercent = (
+  windSpeed: number,
+  units?: Units
+): number => {
+  switch (units) {
   case 'metric':
-    return windSpeed * 100 / maxDisplayedWindSpeedmps;
+    return (windSpeed * 100) / maxDisplayedWindSpeedmps;
   case 'imperial':
-    return windSpeed * 100 / maxDisplayedWindSpeedMpH;
-  default: 
-    return windSpeed * 100 / maxDisplayedWindSpeedmps;
+    return (windSpeed * 100) / maxDisplayedWindSpeedMpH;
+  default:
+    return (windSpeed * 100) / maxDisplayedWindSpeedmps;
   }
-}
+};

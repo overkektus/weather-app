@@ -2,13 +2,12 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import styled from 'styled-components';
 
-import { currentPlaceSlice } from '../../store/reducers/CurrentPlaceSlice';
-import { Title } from '../common';
-import FavoriteCitiesItem from './FavoriteCityItem';
+import { backendAPI } from 'services/BackendService';
+import { currentPlaceSlice } from 'store/reducers/CurrentPlaceSlice';
+import { useAppDispatch } from 'hooks/redux';
+import { Title } from 'components/common/Primitives';
 import Spinner from 'components/common/Spinner';
-import { db } from '../../models/db';
-import { useAppDispatch } from '../../hooks/redux';
-import { backendAPI } from '../../services/BackendService';
+import FavoriteCitiesItem from './FavoriteCityItem';
 
 const FavoriteCitiesContainer: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -22,8 +21,8 @@ const FavoriteCitiesContainer: React.FC = () => {
   }
 
   const handleClick = async (placeId: string): Promise<void> => {
-    const place = (await db.placeItems.where('place_id').equals(placeId).toArray())[0];
-    dispatch(currentPlaceSlice.actions.setCurrentPlace(place));
+    const place = savedPlaces?.filter(place => place.place_id === placeId)[0];
+    dispatch(currentPlaceSlice.actions.setCurrentPlace(place!));
   }
 
   return (
@@ -36,8 +35,8 @@ const FavoriteCitiesContainer: React.FC = () => {
             spaceBetween={20}
           >
             {savedPlaces?.map(place => (
-              <StyledSwiperSlide>
-                <FavoriteCitiesItem key={place.place_id} timeOffset={place.timeOffset} lat={place.lat} lng={place.lng} placeId={place.place_id} onClick={handleClick} onDeleteClick={handleRemoveFromFavorite} cityName={place.formatted_address} />
+              <StyledSwiperSlide key={place.place_id}>
+                <FavoriteCitiesItem timeOffset={place.timeOffset} lat={place.lat} lng={place.lng} placeId={place.place_id} onClick={handleClick} onDeleteClick={handleRemoveFromFavorite} cityName={place.formatted_address} />
               </StyledSwiperSlide>
             ))}
           </Swiper>

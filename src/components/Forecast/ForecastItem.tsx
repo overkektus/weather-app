@@ -2,12 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
-import { formateTemperature, formateDateForForecastCard, formateTime } from '../utils';
-import * as colors from '../assets/styled-components/colors';
-import useLocalStorage from '../hooks/useLocalStorage';
-import { Units } from '../services/WeatherService';
-
-type IconCode = '01d' | '01n' | '02d' | '02n' | '03d' | '03n' | '04d' | '04n' | '09d' | '09n' | '10d' | '10n' | '11d' | '11n' | '13d' | '13n' | '50d' | '50n'; 
+import { formateTemperature, formateDateForForecastCard, formateTime } from 'utils';
+import useLocalStorage from 'hooks/useLocalStorage';
+import { IconCode } from 'interfaces/weatherIconsType';
+import * as colors from 'assets/styled-components/colors';
+import { Units } from 'services/BackendService';
 
 interface ForecastItemProps {
   weatherIconCode: IconCode;
@@ -18,9 +17,10 @@ interface ForecastItemProps {
 
 const ForecastItem: React.FC<ForecastItemProps> = ({ weatherIconCode, minTemp, maxTemp, timestamp }) => {
   const [units] = useLocalStorage<Units>('units', 'metric');
+  
   return (
     <Wrapper>
-      <StyledImg src={require(`../assets/img/icons/${weatherIconCode}.png`)}/>
+      <StyledImg src={require(`/src/assets/img/icons/${weatherIconCode}.png`)}/>
       <TemperatureRange>{formateTemperature(minTemp, units)}/{formateTemperature(maxTemp, units)}</TemperatureRange>
       <DateTime>
         <Day>{formateDateForForecastCard(timestamp)}</Day>

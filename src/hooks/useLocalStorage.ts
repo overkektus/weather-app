@@ -64,7 +64,7 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, SetValue<T>] {
     setStoredValue(readValue())
   }, [])
 
-  const handleStorageChange = () => {
+  const handleStorageChange = (): void => {
     setStoredValue(readValue())
   }
 

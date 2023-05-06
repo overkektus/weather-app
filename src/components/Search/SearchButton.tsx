@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import * as colors from '../assets/styled-components/colors';
+import * as colors from 'assets/styled-components/colors';
 
 interface SearchButtonProps {
   icon: JSX.Element;

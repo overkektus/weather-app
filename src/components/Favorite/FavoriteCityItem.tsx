@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 import { XCircleIcon } from '@heroicons/react/24/solid';
-import { sunriseSunsetAPI } from '../../services/SunriseSunsetService'; 
-import { IconCode } from '../../interfaces/weatherIconsType';
-import * as colors from '../../assets/styled-components/colors';
+
+import { sunriseSunsetAPI } from 'services/SunriseSunsetService'; 
+import { IconCode } from 'interfaces/weatherIconsType';
+import { useClock } from 'hooks/useClock';
+import * as colors from 'assets/styled-components/colors';
 import DeleteButton from './DeleteButton';
-import { useClock } from '../../hooks/useClock';
 
 interface FavoriteCitiesItemProps {
   placeId: string;
@@ -44,7 +45,7 @@ const FavoriteCitiesItem: React.FC<FavoriteCitiesItemProps> = ({ onClick, onDele
   }
 
   return (
-    <Wrapper onClick={() => onClick(placeId)}>
+    <Wrapper onClick={(): void => onClick(placeId)}>
       <Card backgroundImage={imgSrc}>
         <DeleteButton onClick={handleDeleteClick} icon={<StyledXIcon />} />
         <Info>
@@ -112,7 +113,7 @@ const Card = styled.div<CardProps>`
   border-radius: 15px;
   margin-bottom: 20px;
   position: relative;
-  background-image: url('${(props) => props.backgroundImage}');
+  background-image: url('${(props): string => props.backgroundImage}');
   background-size: cover;
   overflow: hidden;
   box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);

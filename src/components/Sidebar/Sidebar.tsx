@@ -1,11 +1,10 @@
 import React from 'react';
 import { HomeIcon, ChartBarIcon, MapIcon, CalendarIcon, CogIcon } from '@heroicons/react/24/outline';
-import { Divider } from 'antd';
 import styled from 'styled-components';
 
-import * as colors from '../assets/styled-components/colors';
-import logo from '../assets/img/logo.png';
-import WeatherContainer from './WeatherContainer';
+import * as colors from 'assets/styled-components/colors';
+import logo from 'assets/img/logo.png';
+import WeatherContainer from 'components/WeatherCard/WeatherContainer';
 import MenuItem from './MenuItem';
 
 const menuItems = [
@@ -82,12 +81,12 @@ const SideBar = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   background-color: ${colors.pramary};
-`
+`;
 
-const StyledDivider = styled(Divider)`
+const StyledDivider = styled.div`
   border-top: 1px solid ${colors.second};
   margin: 0;
-`
+`;
 
 const Menu = styled.ul`
   

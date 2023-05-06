@@ -1,4 +1,5 @@
-import { Units } from '../services/WeatherService';
+import { Units } from 'services/BackendService';
+
 
 export const formateTemperature = (temp: number, units?: Units, precision: number = 0): string => {
   let unitSign;
