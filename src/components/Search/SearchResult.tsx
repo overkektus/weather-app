@@ -1,7 +1,6 @@
 import React, { MouseEventHandler } from 'react';
 import { List } from 'antd';
 import styled from 'styled-components';
-import { GeocodeResult } from '@googlemaps/google-maps-services-js';
 
 import { currentPlaceSlice } from 'store/reducers/CurrentPlaceSlice';
 import { IPlace, backendAPI } from 'services/BackendService';
@@ -20,7 +19,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ data, isLoading, isHidden, 
   const [createPlaceByAddress] = backendAPI.useCreatePlaceByAddressMutation();
   const dispatch = useAppDispatch();
 
-  const handleAddToFavorite = async (place: GeocodeResult): Promise<void> => {
+  const handleAddToFavorite = async (place: IPlace): Promise<void> => {
     await createPlaceByAddress({ address: place.formatted_address });
     dispatch(backendAPI.util.invalidateTags(['Place']));
   }

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-// import { GeocodeResult } from '@googlemaps/google-maps-services-js';
 import { IPlace } from 'services/BackendService';
 
 interface CurrentPlaceState {
