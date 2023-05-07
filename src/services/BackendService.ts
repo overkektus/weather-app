@@ -1,77 +1,62 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { ICurrentWeather } from 'models/ICurrentWeather';
-import { IForecast } from 'models/IForecast';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react'
+
+import { ICurrentWeather } from 'interfaces/CurrentWeather.interface'
+import { IForecast } from 'interfaces/Forecast.interface'
+import { IPlace } from 'interfaces/Place.interface'
+import { Units } from 'interfaces/Units.type'
 
 interface GetPlaceByAddress {
-  address: string;
+  address: string
 }
 
 interface GetPlaceByCoordinates {
-  lat: string;
-  lng: string;
+  lat: string
+  lng: string
 }
 
 interface CreatePlaceByAddress {
-  address: string;
+  address: string
 }
 
 interface DeletePlaceByPlaceId {
-  placeId: string;
+  placeId: string
 }
-
-export type Units = 'metric' | 'imperial'
 
 interface FetchWeatherArgs {
-  lng: number;
-  lat: number;
-  units: Units;
-}
-
-export interface IPlace {
-  readonly place_id: string;
-
-  readonly formatted_address: string;
-  
-  readonly country: string;
-
-  readonly city: string;
-
-  readonly lat: number;
-
-  readonly lng: number;
-
-  readonly timeOffset: number;
-
-  readonly imgName: string;
+  lng: number
+  lat: number
+  units: Units
 }
 
 export const backendAPI = createApi({
   reducerPath: 'backendAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: `${process.env.REACT_APP_API_URL}/api` }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${process.env.REACT_APP_API_URL}/api`,
+  }),
   tagTypes: ['Place'],
   endpoints: (build) => ({
     getPlaceByAddress: build.query<IPlace, GetPlaceByAddress>({
       query: ({ address }) => ({
         url: '/google-maps/address',
         params: {
-          address
-        }
-      })
+          address,
+        },
+      }),
     }),
     getPlaceByCoordinates: build.query<IPlace, GetPlaceByCoordinates>({
       query: ({ lat, lng }) => ({
         url: '/google-maps/coordinates',
         params: {
           lat,
-          lng
-        }
-      })
+          lng,
+        },
+      }),
     }),
     getSavedPlaces: build.query<IPlace[], void>({
       query: () => ({
         url: '/favorite-place',
       }),
-      providesTags: ['Place']
+      providesTags: ['Place'],
     }),
     createPlaceByAddress: build.mutation<any, CreatePlaceByAddress>({
       query: (payload) => ({
@@ -96,9 +81,9 @@ export const backendAPI = createApi({
           lat,
           lng,
           units,
-          appid: process.env.REACT_APP_OPENWEATHERMAP_API_KEY
-        }
-      })
+          appid: process.env.REACT_APP_OPENWEATHERMAP_API_KEY,
+        },
+      }),
     }),
     getForecast: build.query<IForecast, FetchWeatherArgs>({
       query: ({ lng, lat, units = 'metric' }) => ({
@@ -108,8 +93,8 @@ export const backendAPI = createApi({
           lng,
           units,
           appid: process.env.REACT_APP_OPENWEATHERMAP_API_KEY,
-        }
-      })
-    })
-  })
+        },
+      }),
+    }),
+  }),
 })

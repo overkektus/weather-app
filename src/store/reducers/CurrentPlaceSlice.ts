@@ -1,12 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IPlace } from 'services/BackendService';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { IPlace } from 'interfaces/Place.interface'
 
 interface CurrentPlaceState {
   place: IPlace | null
 }
 
 const initialState: CurrentPlaceState = {
-  place: null
+  place: null,
 }
 
 export const currentPlaceSlice = createSlice({
@@ -15,8 +15,8 @@ export const currentPlaceSlice = createSlice({
   reducers: {
     setCurrentPlace(state, action: PayloadAction<IPlace>) {
       state.place = action.payload
-    }
+    },
   },
-});
+})
 
-export default currentPlaceSlice.reducer;
+export default currentPlaceSlice.reducer

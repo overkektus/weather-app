@@ -1,13 +1,13 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface GeocoordinatesState {
-  isLoading: boolean;
+  isLoading: boolean
   coordinates: {
-    lat: string,
+    lat: string
     lon: string
-  },
+  }
   error: {
-    code: number ,
+    code: number
     message: string
   } | null
 }
@@ -15,17 +15,17 @@ interface GeocoordinatesState {
 const initialState: GeocoordinatesState = {
   isLoading: true,
   coordinates: { lat: '', lon: '' },
-  error: null
+  error: null,
 }
 
 interface SetCoordinatesPayload {
-  lat: string,
+  lat: string
   lon: string
 }
 
 interface SetErrorPayload {
-  code: number;
-  message: string;
+  code: number
+  message: string
 }
 
 export const geocoordinatesSlice = createSlice({
@@ -33,13 +33,13 @@ export const geocoordinatesSlice = createSlice({
   initialState,
   reducers: {
     setCoordinates(state, action: PayloadAction<SetCoordinatesPayload>) {
-      state.isLoading = false;
-      state.coordinates = action.payload;
+      state.isLoading = false
+      state.coordinates = action.payload
     },
     setError(state, action: PayloadAction<SetErrorPayload>) {
-      state.error = action.payload;
-    }
+      state.error = action.payload
+    },
   },
-});
+})
 
-export default geocoordinatesSlice.reducer;
+export default geocoordinatesSlice.reducer

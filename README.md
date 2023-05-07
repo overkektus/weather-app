@@ -3,14 +3,15 @@
 #### Description:
 
 Used api:
- - Open Weather
- - Google Geocode
+
+- Open Weather
+- Google Geocode
 
 Figma - https://www.figma.com/file/L7pUXteUmeFW9osFP21bBd/Untitled?node-id=0%3A1
 
 ## Project Screen Shot(s)
 
-#### Example:   
+#### Example:
 
 ![Screenshot](https://github.com/overkektus/weather-app/blob/main/screenshots/Favorite%20cities.png)
 
@@ -20,22 +21,22 @@ Figma - https://www.figma.com/file/L7pUXteUmeFW9osFP21bBd/Untitled?node-id=0%3A1
 
 ## Installation and Setup Instructions
 
-#### Example:  
+#### Example:
 
-Clone down this repository. You will need `node` and `npm` installed globally on your machine.  
+Clone down this repository. You will need `node` and `npm` installed globally on your machine.
 
 Installation:
 
-`npm install`  
+`npm install`
 
-To Run Test Suite:  
+To Run Test Suite:
 
-`npm test`  
+`npm test`
 
 To Start Server:
 
-`npm start`  
+`npm start`
 
 To Visit App:
 
-`localhost:3000`  
+`localhost:3000`

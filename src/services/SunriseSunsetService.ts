@@ -1,6 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react'
 
-type Status = 'OK' | 'INVALID_REQUEST' | 'INVALID_DATE' | 'UNKNOWN_ERROR';
+type Status = 'OK' | 'INVALID_REQUEST' | 'INVALID_DATE' | 'UNKNOWN_ERROR'
 
 interface SunriseSunsetResponseData {
   results: Results
@@ -21,23 +21,28 @@ interface Results {
 }
 
 interface FetchSunriseSunsetArgs {
-  lat: number;
-  lon: number;
+  lat: number
+  lon: number
 }
 
 export const sunriseSunsetAPI: any = createApi({
   reducerPath: 'sunriseSunsetAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://api.sunrise-sunset.org/json' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://api.sunrise-sunset.org/json',
+  }),
   endpoints: (build) => ({
-    fetchSunriseSunset: build.query<SunriseSunsetResponseData, FetchSunriseSunsetArgs>({
+    fetchSunriseSunset: build.query<
+      SunriseSunsetResponseData,
+      FetchSunriseSunsetArgs
+    >({
       query: ({ lat, lon }) => ({
         url: '',
         params: {
           lat,
           lng: lon,
-          formatted: 0
-        }
-      })
-    })
-  })
+          formatted: 0,
+        },
+      }),
+    }),
+  }),
 })

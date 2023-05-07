@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 // See: https://usehooks-ts.com/react-hook/use-event-listener
-import useEventListener from './useEventListener';
+import useEventListener from './useEventListener'
 
 declare global {
   interface WindowEventMap {
@@ -35,11 +35,11 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, SetValue<T>] {
 
   // Return a wrapped version of useState's setter function that ...
   // ... persists the new value to localStorage.
-  const setValue: SetValue<T> = value => {
+  const setValue: SetValue<T> = (value) => {
     // Prevent build error "window is undefined" but keeps working
     if (typeof window == 'undefined') {
       console.warn(
-        `Tried setting localStorage key “${key}” even though environment is not a client`,
+        `Tried setting localStorage key “${key}” even though environment is not a client`
       )
     }
 

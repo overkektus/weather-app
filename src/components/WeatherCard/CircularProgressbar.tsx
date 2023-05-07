@@ -1,12 +1,15 @@
-import React from 'react';
-import range from 'lodash/range';
-import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+import React from 'react'
+import range from 'lodash/range'
+import {
+  CircularProgressbarWithChildren,
+  buildStyles,
+} from 'react-circular-progressbar'
+import 'react-circular-progressbar/dist/styles.css'
 
-import * as colors from 'assets/styled-components/colors';
+import * as colors from 'assets/styled-components/colors'
 
-interface CircularProgressbarProps { 
-  value: number;
+interface CircularProgressbarProps {
+  value: number
 }
 
 const CircularProgressbar: React.FC<CircularProgressbarProps> = ({ value }) => {
@@ -28,19 +31,18 @@ const CircularProgressbar: React.FC<CircularProgressbarProps> = ({ value }) => {
           background: '#fff',
           width: '2px',
           // This needs to be equal to props.strokeWidth
-          height: `${10}%`
+          height: `${10}%`,
         }}
       />
     </CircularProgressbarWithChildren>
-  );
-};
+  )
+}
 
-export default CircularProgressbar; 
-
+export default CircularProgressbar
 
 interface SeparatorProps {
-  style: object;
-  turns: number;
+  style: object
+  turns: number
 }
 
 const Separator: React.FC<SeparatorProps> = ({ turns, style }) => {
@@ -49,24 +51,29 @@ const Separator: React.FC<SeparatorProps> = ({ turns, style }) => {
       style={{
         position: 'absolute',
         height: '100%',
-        transform: `rotate(${turns}turn)`
+        transform: `rotate(${turns}turn)`,
       }}
     >
       <div style={style} />
     </div>
-  );
+  )
 }
 
-interface RadialSeparatorsProps { 
-  count: number;
-  style: object;
+interface RadialSeparatorsProps {
+  count: number
+  style: object
 }
 
-const RadialSeparators: React.FC<RadialSeparatorsProps> = ({ count, style }) => {
-  const turns = 1 / count;
-  return <>
-    {range(count).map(index => (
-      <Separator key={index} turns={index * turns} style={style} />
-    ))}
-  </>
+const RadialSeparators: React.FC<RadialSeparatorsProps> = ({
+  count,
+  style,
+}) => {
+  const turns = 1 / count
+  return (
+    <>
+      {range(count).map((index) => (
+        <Separator key={index} turns={index * turns} style={style} />
+      ))}
+    </>
+  )
 }

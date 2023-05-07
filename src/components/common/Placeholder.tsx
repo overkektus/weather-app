@@ -1,12 +1,10 @@
-import React from 'react';
+import React from 'react'
 // import styled from 'styled-components';
 
-// interface 
+// interface
 
 const Placeholder: React.FC = () => {
-  return (
-    <div></div>
-  )
+  return <div></div>
 }
 
-export default Placeholder;
+export default Placeholder

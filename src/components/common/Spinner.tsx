@@ -1,12 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
-import * as colors from 'assets/styled-components/colors';
+import * as colors from 'assets/styled-components/colors'
 
 const Spinner: React.FC = () => {
-  return (
-    <StyledSpan></StyledSpan>
-  )
+  return <StyledSpan></StyledSpan>
 }
 
 const StyledSpan = styled.span`
@@ -27,6 +25,6 @@ const StyledSpan = styled.span`
       transform: rotate(360deg);
     }
   }
-`;
+`
 
-export default Spinner;
+export default Spinner

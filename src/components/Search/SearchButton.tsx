@@ -1,19 +1,15 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
-import * as colors from 'assets/styled-components/colors';
+import * as colors from 'assets/styled-components/colors'
 
 interface SearchButtonProps {
-  icon: JSX.Element;
+  icon: JSX.Element
   onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 const SearchButton: React.FC<SearchButtonProps> = ({ icon, onClick }) => {
-  return (
-    <StyledButton onClick={onClick}>
-      {icon}
-    </StyledButton>
-  )
+  return <StyledButton onClick={onClick}>{icon}</StyledButton>
 }
 
 const StyledButton = styled.button`
@@ -24,16 +20,17 @@ const StyledButton = styled.button`
   height: 50px;
   border-radius: 15px;
   background-color: ${colors.lightGray};
-  transition: background-color 0.3s ease; 
+  transition: background-color 0.3s ease;
 
   > svg {
     width: 25px;
     height: 25px;
     color: ${colors.pramary};
-    transition: color 0.3s ease; 
+    transition: color 0.3s ease;
   }
 
-  &:hover, &:focus  {
+  &:hover,
+  &:focus {
     background-color: ${colors.pramary};
 
     > svg {
@@ -41,9 +38,10 @@ const StyledButton = styled.button`
     }
   }
 
-  &:active, &:focus {
+  &:active,
+  &:focus {
     background-color: ${colors.pramary};
   }
-`;
+`
 
-export default SearchButton;
+export default SearchButton
