@@ -25,10 +25,6 @@ const SearchResult: React.FC<SearchResultProps> = ({ data, isLoading, isHidden, 
     dispatch(backendAPI.util.invalidateTags(['Place']));
   }
 
-  const handleRemoveFromFavorite = (place: GeocodeResult): void => {
-    console.log(place);
-  }
-
   const handleClick = (place: IPlace): void => {
     dispatch(currentPlaceSlice.actions.setCurrentPlace(place));
   }
@@ -45,7 +41,6 @@ const SearchResult: React.FC<SearchResultProps> = ({ data, isLoading, isHidden, 
             place={item}
             onClick={handleClick}
             onClickAddToFavorite={handleAddToFavorite}
-            onClickRemoveFromFavorite={handleRemoveFromFavorite}
           />
         }
       />
