@@ -2,7 +2,7 @@ import moment from 'moment';
 
 export const formateTime = (timestampSeconds: number): string => {
   const momentInstance = moment(timestampSeconds * 1000);
-  return momentInstance.format('LT');
+  return momentInstance.format('hh:mm');
 }
 
 export const formateDateForWeatherCard = (timestampSeconds: number): string => {
