@@ -36,7 +36,7 @@ const FavoriteCitiesContainer: React.FC = () => {
           >
             {savedPlaces?.map(place => (
               <StyledSwiperSlide key={place.place_id}>
-                <FavoriteCitiesItem timeOffset={place.timeOffset} lat={place.lat} lng={place.lng} placeId={place.place_id} onClick={handleClick} onDeleteClick={handleRemoveFromFavorite} cityName={place.formatted_address} />
+                <FavoriteCitiesItem timeOffset={place.timeOffset} lat={place.lat} lng={place.lng} placeId={place.place_id} onClick={handleClick} onDeleteClick={handleRemoveFromFavorite} cityName={place.formatted_address} imgName={place.imgName} />
               </StyledSwiperSlide>
             ))}
           </Swiper>

@@ -15,12 +15,12 @@ interface FavoriteCitiesItemProps {
   lat: number;
   lng: number;
   timeOffset: number;
-  imgSrc?: string;
+  imgName: string;
   onDeleteClick: Function;
   onClick: Function;
 }
 
-const FavoriteCitiesItem: React.FC<FavoriteCitiesItemProps> = ({ onClick, onDeleteClick, placeId, timeOffset, lat, lng, cityName, imgSrc = 'https://traveller-eu.ru/sites/default/files/ukrashenie-doma-niderlandy-gorod-amsterdam-vecherom-doma-kanala-fary-nochnaya-peyzazh-shelkovoy-tkan-800x533.jpg' }) => {
+const FavoriteCitiesItem: React.FC<FavoriteCitiesItemProps> = ({ onClick, onDeleteClick, placeId, timeOffset, lat, lng, cityName, imgName }) => {
   const { data: sunsetSunrise } = sunriseSunsetAPI.useFetchSunriseSunsetQuery({ lat, lon: lng });
   const { currentTime } = useClock(timeOffset);
   
@@ -46,7 +46,7 @@ const FavoriteCitiesItem: React.FC<FavoriteCitiesItemProps> = ({ onClick, onDele
 
   return (
     <Wrapper onClick={(): void => onClick(placeId)}>
-      <Card backgroundImage={imgSrc}>
+      <Card backgroundImage={`${process.env.REACT_APP_API_URL}/${imgName}`}>
         <DeleteButton onClick={handleDeleteClick} icon={<StyledXIcon />} />
         <Info>
           <CurrentTime>{currentTime.format('HH:mm')}</CurrentTime>

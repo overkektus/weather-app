@@ -41,11 +41,13 @@ export interface IPlace {
   readonly lng: number;
 
   readonly timeOffset: number;
+
+  readonly imgName: string;
 }
 
 export const backendAPI = createApi({
   reducerPath: 'backendAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000' }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${process.env.REACT_APP_API_URL}/api` }),
   tagTypes: ['Place'],
   endpoints: (build) => ({
     getPlaceByAddress: build.query<IPlace, GetPlaceByAddress>({
