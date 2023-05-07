@@ -64,10 +64,12 @@ const FavoriteCitiesItem: React.FC<FavoriteCitiesItemProps> = ({
         <DeleteButton onClick={handleDeleteClick} icon={<StyledXIcon />} />
         <Info>
           <CurrentTime>{currentTime.format('HH:mm')}</CurrentTime>
-          {iconCode && (
+          {iconCode ? (
             <StyledIcon
               src={require(`/src/assets/img/icons/${iconCode}.png`)}
             />
+          ) : (
+            <IconPlaceholder />
           )}
         </Info>
       </Card>
@@ -79,6 +81,11 @@ const FavoriteCitiesItem: React.FC<FavoriteCitiesItemProps> = ({
 export default FavoriteCitiesItem
 
 const StyledXIcon = styled(XCircleIcon)`
+  width: 1.5rem;
+`
+
+const IconPlaceholder = styled.div`
+  height: 1px;
   width: 1.5rem;
 `
 
