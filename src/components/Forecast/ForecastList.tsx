@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { IPlace, Units, backendAPI } from 'services/BackendService';
 import useLocalStorage from 'hooks/useLocalStorage';
+import Spinner from 'components/common/Spinner';
 import ForecastItem from './ForecastItem';
 
 interface ForecastListProps {
@@ -21,7 +22,7 @@ const ForecastList: React.FC<ForecastListProps> = ({ currentPlace }) => {
 
   return (
     <Wrapper>
-      {isLoading && 'Loading....'}
+      {isLoading && <Spinner/>}
       {data && (
         <StyledSwiper
           slidesPerView={'auto'}
@@ -53,6 +54,8 @@ const ForecastList: React.FC<ForecastListProps> = ({ currentPlace }) => {
 
 const Wrapper = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StyledSwiperSlide = styled(SwiperSlide)`

@@ -6,6 +6,7 @@ import { IPlace, Units, backendAPI } from 'services/BackendService';
 import useLocalStorage from 'hooks/useLocalStorage';
 import { formateDateForWeatherCard, formateTime, formateTemperature, formateWindSpeed, getWindSpeedPercent } from 'utils';
 import * as colors from 'assets/styled-components/colors';
+import Spinner from 'components/common/Spinner';
 import CircularProgressbar from './CircularProgressbar';
 
 interface WeatherCardProps {
@@ -22,7 +23,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ currentPlace }) => {
 
   return (
     <>
-      {isWeatherLoading && <p>Loading...</p>}
+      {isWeatherLoading && <Spinner />}
       {currentWeather &&
         <>
           <TopSection>

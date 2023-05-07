@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import * as colors from 'assets/styled-components/colors';
+
 const Spinner: React.FC = () => {
   return (
     <StyledSpan></StyledSpan>
@@ -10,7 +12,7 @@ const Spinner: React.FC = () => {
 const StyledSpan = styled.span`
   width: 48px;
   height: 48px;
-  border: 5px solid red;
+  border: 5px solid ${colors.pramary};
   border-bottom-color: transparent;
   border-radius: 50%;
   display: inline-block;
@@ -19,10 +21,10 @@ const StyledSpan = styled.span`
 
   @keyframes rotation {
     0% {
-        transform: rotate(0deg);
+      transform: rotate(0deg);
     }
     100% {
-        transform: rotate(360deg);
+      transform: rotate(360deg);
     }
   }
 `;
