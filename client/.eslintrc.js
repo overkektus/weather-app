@@ -9,7 +9,7 @@ module.exports = {
     React: true,
     JSX: true,
   },
-  extends: 'eslint:recommended',
+  extends: ['eslint:recommended', 'plugin:cypress/recommended'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
   parserOptions: {
