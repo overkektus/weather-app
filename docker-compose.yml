@@ -9,6 +9,8 @@ services:
       - '27017:27017'
     volumes:
       - mongodb_data:/data/db
+    networks:
+      - app-network
 
   weather-backend:
     image: weather-backend
@@ -21,6 +23,25 @@ services:
       - '3001:3001'
     depends_on:
       - mongodb
+    networks:
+      - app-network
+
+  weather-frontend:
+    image: weather-frontend
+    env_file:
+      - client/.env
+    build:
+      context: ./client/
+      dockerfile: Dockerfile
+    ports:
+      - '80:80'
+    depends_on:
+      - weather-backend
+    networks:
+      - app-network
 
 volumes:
   mongodb_data:
+
+networks:
+  app-network:
